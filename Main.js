@@ -6,8 +6,7 @@ let inputEl = document.getElementById("color-in")
 let colors = [];
 
 //fetch content from colors.txt 
-var myRequest = new Request('colors.txt');
-var myMode = myRequest.mode;
+fetch("colors.txt").then(convertData).then(processData);
 
 function convertData(rawData) {
     return rawData.text();
@@ -19,7 +18,7 @@ function processData(stringData) {
 }
 
 //Event listener 
-inputEl.addEventListener("keyup", submitHandler);
+inputEl.addEventListener("keydown", submitHandler);
 
 function submitHandler(event) {
     //Display all colors on page 
