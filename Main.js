@@ -6,10 +6,11 @@ let inputEl = document.getElementById("color-in")
 let colors = [];
 
 //fetch content from colors.txt 
-fetch("colors.txt").then(covertData).then(processData);
+var myRequest = new Request('colors.txt');
+var myMode = myRequest.mode;
 
 function convertData(rawData) {
-    return rawData.txt();
+    return rawData.text();
 }
 
 function processData(stringData) {
@@ -18,26 +19,25 @@ function processData(stringData) {
 }
 
 //Event listener 
-inputEl.addEventListener("keydown", submitHandler);
+inputEl.addEventListener("keyup", submitHandler);
 
 function submitHandler(event) {
-    if (event.keycode === 13) {
-        //add user's color to colors array and display
-        colors.push(inputEl.value);
-        inputEl.value = "";
-        displayColors(colors);
+    //Display all colors on page 
+    let divStr = "";
+    for (let i = 0; i < colors.length; i++) {
+        if (colors[i].includes(inputEl.value)) {
+            divStr += `<div style="background: ${colors[i]}">${colors[i]}</div>`;
+            count++;
+        }
     }
+    containerEl.innerHTML = divStr;
 }
 
 function displayColors(colors) {
     //Display all colors on page 
     let divStr = "";
-    let count = 0;
-    for (let i = 0; i < colors.length; 1++) {
-        if (colors[1].length === 8) {
-            divStr += '<div style="background: ${colors[i]}">${colors[1]}</div>';
-            count++;
-        }
+    for (let i = 0; i < colors.length; i++) {
+        divStr += `<div style="background: ${colors[i]}">${colors[i]}</div>`;
     }
-    containerEl.innerHTML = divStr + '<p>Count: ${count}</p>';
+    containerEl.innerHTML = divStr;
 }
